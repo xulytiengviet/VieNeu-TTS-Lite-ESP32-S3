@@ -1,0 +1,42 @@
+menu "VieNeu Hybrid Demo"
+
+    config VIENEU_WIFI_SSID
+        string "Wi-Fi SSID"
+        default ""
+
+    config VIENEU_WIFI_PASSWORD
+        string "Wi-Fi password (stored in sdkconfig/firmware; LAN lab only)"
+        default ""
+
+    config VIENEU_API_URL
+        string "VieNeu LAN HTTP /v1/audio/speech URL"
+        default "http://192.168.1.10:8000/v1/audio/speech"
+
+    config VIENEU_BEARER_TOKEN
+        string "Optional API token (LAN only; transmitted over cleartext HTTP)"
+        default ""
+
+    config VIENEU_VOICE
+        string "VieNeu preset voice"
+        default "Mai Anh"
+
+    config VIENEU_TEXT
+        string "Vietnamese text for single synthesis request"
+        default "Xin chào Việt Nam"
+
+    config VIENEU_I2S_BCLK
+        int "I2S BCLK GPIO number"
+        range 0 48
+        default 4
+
+    config VIENEU_I2S_WS
+        int "I2S LRCK/WS GPIO number"
+        range 0 48
+        default 5
+
+    config VIENEU_I2S_DOUT
+        int "I2S DAC DIN GPIO number"
+        range 0 48
+        default 6
+
+endmenu

@@ -1,3 +1,32 @@
+# VieNeu-TTS Lite · ESP32-S3 Edge Research Lab
+
+**CVNSS4.0 · Base27 · Ternary · Vietnamese Tiny TTS · ESP32-S3**
+
+[**🌐 Mở trang thí nghiệm GitHub Pages**](https://xulytiengviet.github.io/VieNeu-TTS-Lite-ESP32-S3/) · [**Trang nguồn trong repository**](docs/index.html) · [**Hướng dẫn thực nghiệm**](docs/EDGE_EXPERIMENTS.md) · [**Firmware ESP-IDF**](firmware/esp32s3_hybrid/README.md)
+
+> **Trạng thái:** Base27 + bộ kiểm thử và firmware *hybrid* tham chiếu được cung cấp; **chưa chứng minh VieNeu ONNX chạy trực tiếp trên ESP32-S3**. Nhánh student INT8/ternary vẫn là nghiên cứu. Mã CVNSS4.0 Unicode↔ASCII phải được tích hợp từ converter đã kiểm chứng; không được coi Base27 là CVNSS4.0.
+
+## Bắt đầu nhanh với thành phần nghiên cứu
+
+```bash
+python -m unittest discover -s tests -p 'test_base27_reference.py' -v
+python -m unittest discover -s tests -p 'test_cvnss_audit.py' -v
+python tools/base27.py encode "XIN CHAO VIET NAM"
+python tools/ternary_budget.py --parameters 48000000
+```
+
+- **Mã hóa**: `tools/base27.py` bảo toàn A–Z + SPACE ↔ ba chữ số `0/1/2`; không tự chuyển Unicode. Để kiểm tra CVNSS4.0 thật, xuất CSV với ba trường `unicode_source,cvnss_ascii,unicode_restored`, chạy `python -m tools.cvnss_audit data.csv`.
+- **Ngân sách trọng số**: `tools/ternary_budget.py` so sánh FP32, INT8, ternary 2-bit và giới hạn lý tưởng; không phải benchmark tốc độ.
+- **Hybrid ESP32-S3**: `firmware/esp32s3_hybrid/` dùng ESP-IDF Wi-Fi → VieNeu Nano HTTP LAN → RIFF/WAV → I2S; mô hình neural vẫn chạy trên host/Orange Pi.
+- **Giao diện**: `docs/index.html`, `docs/style.css`, `docs/app.js`; không CDN, hoạt động offline cho phần mô phỏng.
+- **Kiểm thử nhẹ**: `.github/workflows/edge-lab.yml` kiểm tra Python, parser C và JavaScript (không giả lập đã flash board).
+
+Để xuất bản Pages: **Settings → Pages → Deploy from a branch → main /docs**. Giữ nguyên bản ghi, pipeline và giấy phép từ upstream; phần bổ sung này không thay thế backend VieNeu-TTS.
+
+---
+
+## Backend VieNeu-TTS gốc
+
 # VieNeu-TTS (Instabox · Orange Pi)
 
 Bản rút gọn để chạy **VieNeu-TTS v3 Nano** (ONNX/CPU, 24 kHz) trên 2 nguồn

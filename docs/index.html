@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080b11">
+  <meta name="description" content="VieNeu-TTS Edge Lab: CVNSS4.0, Base27, 3 trít, ESP32-S3, thực nghiệm lượng tử hóa và tổng hợp tiếng Việt.">
+  <title>VieNeu Edge Lab — CVNSS4.0 · Base27 · Ternary · ESP32-S3</title>
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="topline"></div>
+  <header class="site-header">
+    <a class="brand" href="#top"><span class="brand-icon">V<span class="brand-dot">.</span></span><span>VIENEU<span class="muted"> / EDGE LAB</span></span></a>
+    <nav aria-label="Chính"><a href="#architecture">Kiến trúc</a><a href="#playground">Base27 Lab</a><a href="#budget">Ternary</a><a href="#experiments">Thử nghiệm</a><a href="#roadmap">Lộ trình</a></nav>
+    <a class="github-link" href="https://github.com/xulytiengviet/VieNeu-TTS-Lite-ESP32-S3" target="_blank" rel="noopener noreferrer"><span class="live-dot"></span>GITHUB ↗</a>
+  </header>
+  <main id="top">
+    <section class="hero section">
+      <div class="hero-main">
+        <div class="eyebrow"><span class="prompt">~/research/vieneu</span><span class="eyebrow-sep">/</span><span class="status-dot"></span> OPEN SCIENCE · EXPERIMENTAL</div>
+        <h1>TIẾNG VIỆT.<br><span class="accent-yellow">BA TRÍT.</span><br><span class="accent-blue">EDGE AI.</span></h1>
+        <p class="hero-desc">Phòng thí nghiệm mở cho chuỗi <strong>CVNSS4.0 → Base27 → Ternary → Tiny TTS → ESP32-S3</strong>. Mã hóa có thể kiểm chứng, tính toán bộ nhớ minh bạch, và lộ trình từ VieNeu-TTS trên Orange Pi đến vi điều khiển.</p>
+        <div class="hero-actions"><a class="btn primary" href="#playground">MỞ TRÌNH MÔ PHỎNG <span>↗</span></a><a class="btn secondary" href="#experiments">HƯỚNG DẪN THỰC NGHIỆM <span>↓</span></a></div>
+        <div class="hero-foot"><span><i class="tiny-circle"></i> NO BACKEND REQUIRED FOR DEMO</span><span>UTF-8 PRESERVED</span><span>LICENSE <em>APACHE-2.0</em></span></div>
+      </div>
+      <aside class="terminal" aria-label="Minh họa terminal">
+        <div class="terminal-title"><span class="traffic"><i></i><i></i><i></i></span><span>edge-research.log</span><span>● LOCAL DEMO</span></div>
+        <div class="terminal-body"><div><span class="t-green">$</span> vieneu-edge --inspect</div>
+          <div class="t-muted">[MODEL] VieNeu v3 Nano · ONNX · 24 kHz</div>
+          <div class="t-muted">[TARGET] ESP32-S3 · Xtensa LX7</div>
+          <div class="t-yellow">[NOTICE] ONNX model does not fit/run natively</div>
+          <div class="t-muted">[BASE27] alphabet: A–Z + SPACE</div>
+          <div class="t-green">[MAPPING] 27 = 3³ · fixed 3 trits/char</div>
+          <div class="terminal-visual" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>0</span><span>2</span><span>1</span><span>0</span><span>1</span><span>2</span><span>2</span><span>0</span><span>1</span></div>
+          <div><span class="t-blue">→</span> CVNSS4.0 adapter: <strong class="t-yellow">NOT WIRED</strong></div>
+          <div><span class="t-blue">→</span> Ternary kernel: <strong class="t-yellow">RESEARCH</strong></div>
+          <div><span class="t-green">$</span> <span class="cursor">_</span></div>
+        </div>
+      </aside>
+    </section>
+    <div class="metric-strip"><div><span>01 / BACKEND</span><strong>V3 NANO</strong><small>VieNeu / 24 kHz</small></div><div><span>02 / ALPHABET</span><strong>27</strong><small>A–Z + SPACE</small></div><div><span>03 / ENCODING</span><strong>3 TRITS</strong><small>Fixed length</small></div><div><span>04 / TARGET</span><strong>ESP32-S3</strong><small>Research target</small></div></div>
+    <section id="architecture" class="section">
+      <div class="section-head"><p class="kicker">01 — SYSTEM ARCHITECTURE</p><h2>Hai nhánh.<span class="serif"> Một lộ trình.</span></h2><p>Tách kết quả đã vận hành khỏi giả thuyết nghiên cứu để không nhầm trình diễn mã hóa với TTS đã chạy trên ESP32-S3.</p></div>
+      <div class="pipeline">
+        <div class="pipe-node"><span class="node-num">01</span><b>UTF-8</b><small>Tiếng Việt có dấu<br>giữ nguyên bản gốc</small></div><span class="connector">→</span>
+        <div class="pipe-node"><span class="node-num">02</span><b>CVNSS4.0</b><small>Bộ chuyển đổi riêng<br>cần tích hợp + audit</small></div><span class="connector">→</span>
+        <div class="pipe-node active"><span class="node-num">03</span><b>BASE27</b><small>A–Z + SPACE<br>3 trít / ký hiệu</small></div><span class="connector">→</span>
+        <div class="pipe-node"><span class="node-num">04</span><b>G2P</b><small>Âm vị, thanh điệu<br>và ngữ điệu</small></div><span class="connector">→</span>
+        <div class="pipe-node"><span class="node-num">05</span><b>TTS</b><small>Audio PCM → I2S<br>hoặc phát qua LAN</small></div>
+      </div>
+      <div class="branch-grid">
+        <article class="branch"><div class="branch-top"><span class="branch-label green">PATH A / HYBRID</span><span class="chip">THỰC DỤNG</span></div><h3>Orange Pi <span>→</span> ESP32-S3</h3><p>VieNeu-TTS v3 Nano thực thi trên Orange Pi/host. ESP32-S3 nhận WAV qua HTTP trong LAN, đệm rồi phát PCM 16-bit bằng I2S. Đây là firmware có thể biên dịch và thử trên thiết bị.</p><div class="branch-tech">ONNX CPU <span>·</span> HTTP LAN <span>·</span> I2S DAC</div></article>
+        <article class="branch"><div class="branch-top"><span class="branch-label yellow">PATH B / OFFLINE</span><span class="chip">NGHIÊN CỨU</span></div><h3>Student TTS <span>→</span> ESP32-S3</h3><p>Distillation từ VieNeu, phonemizer rút gọn, student INT8 và thử nghiệm trọng số ternary {-1, 0, +1}. Chưa có mô hình học sinh hoặc số đo realtime được xác minh.</p><div class="branch-tech">INT8 BASELINE <span>·</span> TERNARY KERNEL <span>·</span> VOCODER</div></article>
+      </div>
+    </section>
+    <section id="playground" class="section">
+      <div class="section-head"><p class="kicker">02 — INTERACTIVE PLAYGROUND</p><h2>Base27 <span class="serif">/ 3 Trit Lab</span></h2><p>Mỗi ký hiệu thuộc bảng chữ A–Z và SPACE ánh xạ duy nhất thành 3 chữ số cơ số 3. Thử mã hóa, giải mã và phát hiện ký tự không hợp lệ. <strong>Không tự chuyển Unicode → CVNSS4.0.</strong></p></div>
+      <div class="lab">
+        <div class="lab-input">
+          <label for="source">INPUT / CVNSS4.0 ASCII PAYLOAD HOẶC VĂN BẢN ASCII THỬ NGHIỆM</label>
+          <textarea id="source" spellcheck="false" rows="4" placeholder="XIN CHAO VIET NAM">XIN CHAO VIET NAM</textarea>
+          <p class="lab-hint">Bảng tham chiếu: A=000, B=001, …, Z=221, SPACE=222. Đây là <b>transport encoding</b>, không phải bộ chuyển CVNSS4.0 hoặc chuyển văn bản thành âm vị.</p>
+          <div class="lab-actions"><button id="encode" class="btn primary" type="button">MÃ HÓA + ROUND-TRIP ↗</button><button id="sample" class="btn secondary" type="button">CÂU MẪU</button><button id="clear" class="btn ghost" type="button">XÓA</button></div>
+          <div id="lab-status" class="lab-status" role="status" aria-live="polite"></div>
+        </div>
+        <div class="lab-output">
+          <div class="output-head"><span>OUTPUT / TRIT STREAM</span><button id="copy" class="mini-btn" type="button">COPY</button></div>
+          <div id="trits" class="trit-output">—</div>
+          <div class="output-info"><div><span>SYMBOLS</span><strong id="symbols">0</strong></div><div><span>TRITS</span><strong id="trit-count">0</strong></div><div><span>ROUND-TRIP</span><strong id="roundtrip">—</strong></div></div>
+          <div class="decode-label">DECODED / ASCII PAYLOAD</div><pre id="decoded">—</pre>
+        </div>
+      </div>
+      <div class="mini-heading">TRA CỨU 27 KÝ HIỆU <span>// NHẤN ĐỂ THÊM VÀO Ô NHẬP</span></div><div id="alphabet" class="alphabet" aria-label="Bảng Base27"></div>
+    </section>
+    <section id="budget" class="section">
+      <div class="section-head"><p class="kicker">03 — MODEL MEMORY BUDGET</p><h2>Trọng số <span class="serif">≠ tổng bộ nhớ.</span></h2><p>Ước tính trọng số thuần theo số tham số. Không cộng activation, tensor trung gian, vocoder, framework, metadata, codebook, PSRAM và bộ đệm âm thanh.</p></div>
+      <div class="budget-panel">
+        <div class="budget-control"><label for="parameters">MODEL PARAMETERS <strong id="parameters-label">48.0M</strong></label><input id="parameters" type="range" min="0.5" max="48" step="0.5" value="48"><div class="range-labels"><span>0.5M · STUDENT GOAL</span><span>48M · NANO</span></div></div>
+        <div class="budget-bars"><div class="bar-row"><span>FP32</span><div class="track"><i id="fp32-bar"></i></div><b id="fp32-value"></b></div><div class="bar-row"><span>INT8</span><div class="track"><i id="int8-bar"></i></div><b id="int8-value"></b></div><div class="bar-row"><span>TERNARY 2-BIT</span><div class="track"><i id="ternary-bar"></i></div><b id="ternary-value"></b></div><div class="bar-row"><span>IDEAL 1.585-BIT</span><div class="track"><i id="entropy-bar"></i></div><b id="entropy-value"></b></div></div>
+        <div class="budget-note"><span>!</span><p>3 trít cho một ký hiệu Base27 <b>không đồng nghĩa</b> với 1.585 bit/trọng số ternary. Hai hệ biểu diễn độc lập; kernel triển khai trong CPU nhị phân có chi phí tính toán và đóng gói riêng.</p></div>
+      </div>
+    </section>
+    <section id="experiments" class="section">
+      <div class="section-head"><p class="kicker">04 — EXPERIMENT PROTOCOLS</p><h2>Từ terminal <span class="serif">đến board thật.</span></h2><p>Chọn một phép thử. Lệnh và tài liệu nằm trong repository, kèm điểm chặn chất lượng trước khi công bố kết quả.</p></div>
+      <div class="experiment-grid">
+        <div class="experiment-tabs" role="tablist" aria-label="Các thử nghiệm">
+          <button class="experiment-tab selected" type="button" role="tab" id="tab-host" aria-selected="true" aria-controls="experiment-text" data-tab="host"><span>EXPERIMENT / 01</span><strong>VieNeu trên host</strong><small>ONNX / Orange Pi · khởi tạo baseline</small></button>
+          <button class="experiment-tab" type="button" role="tab" id="tab-esp" aria-selected="false" aria-controls="experiment-text" data-tab="esp"><span>EXPERIMENT / 02</span><strong>ESP32-S3 Hybrid I2S</strong><small>LAN HTTP / WAV / I2S · cần board</small></button>
+          <button class="experiment-tab" type="button" role="tab" id="tab-base27" aria-selected="false" aria-controls="experiment-text" data-tab="base27"><span>EXPERIMENT / 03</span><strong>Base27 + Ternary Audit</strong><small>Round-trip / memory budget · chạy offline</small></button>
+        </div>
+        <div class="experiment-console"><div class="output-head"><span id="experiment-title">EXP-01 // HOST BASELINE</span><button id="copy-experiment" class="mini-btn" type="button">COPY COMMANDS</button></div><pre id="experiment-text" role="tabpanel" aria-labelledby="tab-host"></pre><p id="experiment-note" class="experiment-note"></p></div>
+      </div>
+      <div class="callout"><span>VALIDATION RULE</span><p><b>Chưa có benchmark ESP32-S3 = chưa được tuyên bố TTS offline.</b> Cần báo cáo board, RAM/PSRAM, tốc độ, RTF, hao hụt audio và đánh giá phát âm tiếng Việt trên tập kiểm thử cố định.</p></div>
+    </section>
+    <section id="roadmap" class="section">
+      <div class="section-head"><p class="kicker">05 — RELEASE GATES</p><h2>Lộ trình <span class="serif">có điều kiện PASS.</span></h2></div>
+      <div class="roadmap">
+        <div><span class="stage">GATE 00</span><h3>ASCII ↔ 3 trít</h3><p>Golden vectors + lỗi ký tự ngoài bảng + kiểm tra round-trip.</p><small>REFERENCE / CÓ MÃ NGUỒN</small></div>
+        <div><span class="stage">GATE 01</span><h3>Hybrid audio</h3><p>API VieNeu → ESP32-S3 → PCM I2S; đo heap, lỗi WAV, độ trễ.</p><small>FIRMWARE / CHỜ ĐO BOARD</small></div>
+        <div><span class="stage">GATE 02</span><h3>Student INT8</h3><p>Huấn luyện mô hình mới; đối chiếu chất lượng với teacher.</p><small>RESEARCH / CHƯA CÓ CHECKPOINT</small></div>
+        <div><span class="stage">GATE 03</span><h3>Ternary inference</h3><p>Kernel {-1,0,+1}, đo latency/điện năng/chất lượng so với INT8.</p><small>RESEARCH / CHƯA BENCHMARK</small></div>
+      </div>
+    </section>
+    <section class="section end-section"><div><p class="kicker">REPRODUCIBLE / RESEARCH</p><h2>Đo. <span class="accent-yellow">Kiểm chứng.</span><br>Rồi mới công bố.</h2><p>VieNeu-TTS là upstream model; CVNSS4.0 là bộ quy tắc chuyển đổi cần kiểm chứng độc lập; ternary là hướng tối ưu số học. Không đánh đồng demo mã hóa và khả năng tổng hợp tiếng nói realtime trên vi điều khiển.</p></div><div class="end-links"><a href="https://github.com/xulytiengviet/VieNeu-TTS-Lite-ESP32-S3/blob/main/docs/EDGE_EXPERIMENTS.md" target="_blank" rel="noopener noreferrer">READ EXPERIMENT GUIDE ↗</a><a href="https://github.com/xulytiengviet/VieNeu-TTS-Lite-ESP32-S3/tree/main/firmware/esp32s3_hybrid" target="_blank" rel="noopener noreferrer">ESP-IDF FIRMWARE ↗</a><a href="https://github.com/xulytiengviet/VieNeu-TTS-Lite-ESP32-S3" target="_blank" rel="noopener noreferrer">SOURCE CODE ↗</a></div></section>
+  </main>
+  <footer><span>© 2026 LONG NGO · VIENEU EDGE LAB</span><span>OPEN SOURCE · UPSTREAM: <a href="https://github.com/pnnbao97/VieNeu-TTS" target="_blank" rel="noopener noreferrer">VIENEU-TTS</a></span><span>NO TRACKING · STATIC SITE</span></footer>
+</body>
+</html>

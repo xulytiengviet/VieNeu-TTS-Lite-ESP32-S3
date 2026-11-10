@@ -1,0 +1,50 @@
+name: Edge Lab reference checks
+on:
+  push:
+    paths:
+      - "tools/**"
+      - "tests/test_base27_reference.py"
+      - "firmware/esp32s3_hybrid/**"
+      - "docs/**"
+      - ".github/workflows/edge-lab.yml"
+  pull_request:
+    paths:
+      - "tools/**"
+      - "tests/test_base27_reference.py"
+      - "firmware/esp32s3_hybrid/**"
+      - "docs/**"
+      - ".github/workflows/edge-lab.yml"
+
+jobs:
+  transport-and-parser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Base27 and memory budget tests
+        run: python -m unittest discover -s tests -p 'test_base27_reference.py' -v
+      - name: CVNSS4.0 I/O contract tests
+        run: python -m unittest discover -s tests -p 'test_cvnss_audit.py' -v
+      - name: Ternary budget CLI
+        run: python tools/ternary_budget.py --parameters 48000000
+      - name: WAV header parser host tests
+        run: |
+          cc -std=c11 -Wall -Wextra -Werror \
+            -Ifirmware/esp32s3_hybrid/main \
+            firmware/esp32s3_hybrid/main/wav_pcm.c \
+            firmware/esp32s3_hybrid/tests/test_wav_pcm.c -o /tmp/test_wav
+          /tmp/test_wav
+      - name: JavaScript syntax check
+        run: |
+          node --check docs/app.js
+      - name: HTML static audit
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html = Path('docs/index.html').read_text()
+          for fragment in ['./style.css', './app.js', 'id="alphabet"', 'id="trits"']:
+              assert fragment in html, fragment
+          print('PASS: page assets and playground controls')
+          PY
