@@ -71,8 +71,7 @@
     base27: {
       title: 'EXP-03 // BASE27 REFERENCE / TERNARY BUDGET',
       note: 'PASS yêu cầu round-trip dữ liệu A–Z + SPACE, test không hợp lệ, và số liệu kích thước trọng số được ghi chú là lý thuyết. CVNSS4.0 converter thật phải được kiểm thử riêng.',
-      code: 'python tools/base27.py encode "XIN CHAO VIET NAM"\npython tools/base27.py decode 212022111222002021000112222210022011201222111000110
-python -m unittest discover -s tests -p "test_base27_reference.py"\npython tools/ternary_budget.py --parameters 48000000\n# firmware parser tests (host GCC)\ncc -std=c11 -Wall -Wextra -Werror -Ifirmware/esp32s3_hybrid/main firmware/esp32s3_hybrid/main/wav_pcm.c firmware/esp32s3_hybrid/tests/test_wav_pcm.c -o /tmp/test_wav && /tmp/test_wav'
+      code: 'python tools/base27.py encode "XIN CHAO VIET NAM"\npython tools/base27.py decode 212022111222002021000112222210022011201222111000110\npython -m unittest discover -s tests -p "test_base27_reference.py"\npython tools/ternary_budget.py --parameters 48000000\n# firmware parser tests (host GCC)\ncc -std=c11 -Wall -Wextra -Werror -Ifirmware/esp32s3_hybrid/main firmware/esp32s3_hybrid/main/wav_pcm.c firmware/esp32s3_hybrid/tests/test_wav_pcm.c -o /tmp/test_wav && /tmp/test_wav'
     }
   };
   const alphabet = $('alphabet');
